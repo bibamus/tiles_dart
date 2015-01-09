@@ -9,28 +9,37 @@ import 'keyboard.dart';
 CanvasElement canvas = querySelector('#canvas');
 
 
+List<Sprite> sprites = [];
 
-Sprite sprite;
+
+Sprite hero = new Sprite(new ImageElement(src: "s6.png"), 400, 400);
 
 Game game = new Game(canvas.getContext('2d'));
 
 num last = 0;
 
+int width = 800;
+int height = 640;
+
 void main() {
-  sprite = new Sprite(new ImageElement(src: "s6.png"));
-  sprite.img.onLoad.listen(game.start);
+  canvas.width = width;
+  canvas.height = height;
+  sprites.add(new Sprite(new ImageElement(src: "red.png"),400,350));
+  sprites.add(new Sprite(new ImageElement(src: "red.png"),400,450));
+  sprites.add(new Sprite(new ImageElement(src: "red.png"),350,400));
+  hero.img.onLoad.listen(game.start);
 
 }
 
 class Game {
 
-  
+
   CanvasRenderingContext2D context;
   Keyboard input = new Keyboard();
-  
-  
+
+
   Game(this.context);
-  
+
   void start(Event e) {
 
     window.animationFrame.then(loop);
@@ -42,7 +51,18 @@ class Game {
 
     context.fillStyle = '#ffffff';
     context.fillRect(0, 0, 800, 640);
-    context.drawImage(sprite.img, sprite.x, sprite.y);
+    context.drawImage(hero.img
+        , (width-hero.w)/2, (height-hero.h)/2);
+    for (var sprite in sprites) {
+      var x = sprite.x;
+      var y = sprite.y;
+      x = hero.x-x;
+      y = hero.y-y;
+      x = (width-hero.w)/2 - x;
+      y = (height-hero.h)/2 - y;
+      context.drawImage(sprite.img, x, y);
+      print('x:$x y:$y');
+    }
     window.animationFrame.then(loop);
   }
 
@@ -57,10 +77,10 @@ class Game {
 
 
 
-    if (time - last > 1000 / 40) {
+    if (time - last > 1000 / 250) {
       last = time;
-      print('dy: $dy dx: $dx time: $time');
-      sprite.move(dx, dy);
+      //print('dy: $dy dx: $dx time: $time');
+        hero.move(dx, dy);
     }
   }
 }
