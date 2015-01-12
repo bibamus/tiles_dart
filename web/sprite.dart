@@ -10,7 +10,8 @@ class Sprite {
   int w;
   int h;
   
-  Sprite(this.img,[this.x = 0,this.y = 0]){
+  Sprite(String imgpath,[this.x = 0,this.y = 0]){
+    img =  new ImageElement(src: imgpath); 
     img.onLoad.listen((e) {
       w = img.width;
       h = img.height;
