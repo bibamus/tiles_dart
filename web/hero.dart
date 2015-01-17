@@ -1,9 +1,8 @@
-import 'sprite.dart';
-
+part of Sprite;
 
 class Hero extends Sprite {
   
   
-  Hero([x=0,y=0]):super('s6.png',x,y);
+  Hero([int x=0,int y=0]):super('images/hero.png',x,y);
   
 }

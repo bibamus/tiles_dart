@@ -1,6 +1,10 @@
 library Sprite;
 
+
 import 'dart:html';
+import 'resource.dart';
+
+part 'hero.dart';
 
 class Sprite {
   
@@ -10,11 +14,14 @@ class Sprite {
   int w;
   int h;
   
-  Sprite(String imgpath,[this.x = 0,this.y = 0]){
-    img =  new ImageElement(src: imgpath); 
+  bool loaded = false;
+  
+  Sprite(String path,[this.x = 0,this.y = 0]){
+    img =  Resource.getImg(path); 
     img.onLoad.listen((e) {
       w = img.width;
       h = img.height;
+      loaded = true;
     });
 
   }
